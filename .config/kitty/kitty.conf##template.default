@@ -56,3 +56,15 @@ color7		#{{ env.WHITE }}
 color15		#{{ env.WHITE_HI }}
 
 background_opacity 0.97
+
+enabled_layouts horizontal
+
+# Switch focus to the neighboring window in the indicated direction
+map ctrl+shift+h neighboring_window left
+map ctrl+shift+l neighboring_window right
+map ctrl+shift+k neighboring_window up
+map ctrl+shift+j neighboring_window down
+
+map ctrl+shift+n new_os_window_with_cwd
+map ctrl+shift+m new_window_with_cwd
+map ctrl+shift+t new_tab_with_cwd

@@ -61,6 +61,20 @@ output * bg $bg fill
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
+# Configure shortcuts to map tablet to an area in the center of the screen.
+set $get_width swaymsg -t get_outputs | jq "first.current_mode.width"
+set $get_height swaymsg -t get_outputs | jq "first.current_mode.height"
+
+set $mode_inputs Inputs (p) pentablet (r) reset
+mode "$mode_inputs" {
+    bindsym p input 1386:891:Wacom_One_by_Wacom_M_Pen map_to_region 320 180 1920 1080 , mode "default"
+    bindsym r exec \
+        swaymsg input 1386:891:Wacom_One_by_Wacom_M_Pen map_to_region 0 0 $($get_width) $($get_height) , \
+        mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+i mode "$mode_inputs"
+
 input type:pointer {
     left_handed disabled
     tap enabled

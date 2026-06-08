@@ -123,7 +123,9 @@ alias xzgrep='xzgrep --color=auto'
 alias zegrep='zegrep --color=auto'
 alias zfgrep='zfgrep --color=auto'
 alias zgrep='zgrep --color=auto'
+
 alias rm='echo "rm is disabled, use remove or trash or /bin/rm instead."'
+alias trash='trashy put'
 
 # Enable vim bindings
 bindkey -v
@@ -142,7 +144,6 @@ export PATH=$PATH:$HOME/mybin/
 export PATH=$PATH:$HOME/.local/bin/
 
 # export GDK_BACKEND=x11
-
 
 # zsh-vim-mode cursor settings
 MODE_CURSOR_VIINS="#add87d blinking bar"
@@ -164,19 +165,19 @@ MODE_INDICATOR_VLINE='%F{12}[%F{4}V-LINE]%f'
 KEYTIMEOUT=1
 
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
+# opam configuration
+[[ ! -r /home/astr/.opam/opam-init/init.zsh ]] || source /home/astr/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
-export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
-__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba init' !!
+export MAMBA_EXE='/usr/bin/micromamba';
+export MAMBA_ROOT_PREFIX='/home/astr/.local/share/mamba';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
 if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
+    eval "$__mamba_setup"
 else
-    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/miniconda3/bin:$PATH"
-    fi
+    alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
 fi
-unset __conda_setup
-# <<< conda initialize <<<
+unset __mamba_setup
+# <<< mamba initialize <<<
+alias conda=micromamba
